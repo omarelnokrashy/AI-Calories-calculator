@@ -30,14 +30,12 @@ class FruitBinarySegmenter:
         self.image_size = image_size
         self.threshold = threshold
         
-        # 1. Setup Transforms
         self.transform = A.Compose([
             A.Resize(self.image_size, self.image_size),
             A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ToTensorV2()
         ])
 
-        # 2. Load Model
         self.model = ModernUNet(encoder_name='resnet34', encoder_weights=None)
         self.model = self._load_checkpoint(self.model, model_path)
         self.model.to(self.device)
@@ -47,7 +45,6 @@ class FruitBinarySegmenter:
         checkpoint = torch.load(filename, map_location=self.device)
         state_dict = checkpoint['model_state_dict'] if 'model_state_dict' in checkpoint else checkpoint
         
-        # Fix Key Mismatches
         new_state_dict = {}
         for key, value in state_dict.items():
             if key.startswith("model."):
@@ -67,27 +64,21 @@ class FruitBinarySegmenter:
         original_img_bgr = cv2.imread(image_path)
         if original_img_bgr is None: return None
         
-        # Preprocess
         original_img_rgb = cv2.cvtColor(original_img_bgr, cv2.COLOR_BGR2RGB)
         augmented = self.transform(image=original_img_rgb)
         img_tensor = augmented['image'].unsqueeze(0).to(self.device)
         
-        # Inference
         with torch.no_grad():
             output = self.model(img_tensor)
             pred_mask = (output > self.threshold).float().cpu().numpy()[0, 0, :, :]
         
-        # Visualization Logic
         viz_img = cv2.resize(original_img_bgr, (self.image_size, self.image_size))
         
-        # Create Red Overlay
         mask_colored = np.zeros_like(viz_img)
         mask_colored[:, :, 2] = (pred_mask * 255).astype(np.uint8) 
         overlay = cv2.addWeighted(viz_img, 0.7, mask_colored, 0.3, 0)
         
-        # Prepare Grayscale Mask
         mask_3ch = cv2.cvtColor((pred_mask * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
         
-        # Stack: Original | Mask | Overlay
         return np.hstack((viz_img, mask_3ch, overlay))
         

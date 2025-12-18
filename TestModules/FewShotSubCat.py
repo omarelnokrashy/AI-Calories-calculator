@@ -58,7 +58,7 @@ class SwinProtoNetClassifier:
             return
         
         data = {
-            'prototypes': self.prototypes.cpu(), # Move to CPU for safe storage
+            'prototypes': self.prototypes.cpu(), 
             'class_names': self.class_names
         }
         torch.save(data, save_path)

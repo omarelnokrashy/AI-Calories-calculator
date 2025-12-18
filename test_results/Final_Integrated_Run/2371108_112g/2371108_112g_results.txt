@@ -1,3 +1,0 @@
-Food
-General Food
-Calorie data not calculated for general food

@@ -20,7 +20,6 @@ class SwinProtoNetSiamese:
     def __init__(self, model_path, device=None):
         self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
-        # 1. Setup Transforms
         self.transform = transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
@@ -28,11 +27,10 @@ class SwinProtoNetSiamese:
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
-        # 2. Load the Model
+
         self.model = SwinProtoNet()
         checkpoint = torch.load(model_path, map_location=self.device)
         
-        # Handle different saving formats
         state_dict = checkpoint.get('model_state', checkpoint.get('model_state_dict', checkpoint))
         self.model.load_state_dict(state_dict)
         self.model.to(self.device)
