@@ -1,7 +1,7 @@
 ﻿# 🍎 Yummy AI: Intelligent Food & Fruit Analysis
 
-**Yummy AI** is a comprehensive computer vision system designed to analyze food and fruit images. It combines multiple deep learning models to perform binary classification (Food vs. Fruit), fruit subcategory classification, few-shot food recognition, calorie estimation, and image segmentation.
-**Link*:https://ai-calories-calculator-zrqrwcwv8ggdogx5shjdjs.streamlit.app/
+**Yummy AI** is a comprehensive computer vision system designed to analyze food and fruit images. It combines multiple deep learning models to perform binary classification (Food vs. Fruit), fruit subcategory classification, few-shot food recognition, calorie estimation, and image segmentation.  
+**Link**:https://ai-calories-calculator-zrqrwcwv8ggdogx5shjdjs.streamlit.app/
 ## 🚀 Key Features
 
 *   **Binary Classification:** Distinguishes between "Food" and "Fruit" images.
@@ -78,4 +78,5 @@ Results will be saved in `test_results/Final_Integrated_Run`.
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
+
 
