@@ -15,7 +15,6 @@ INTEGRATED_DIR = os.path.join(BASE_TEST_DIR, "Integerated Test")
 SIAMESE_DIR = os.path.join(BASE_TEST_DIR, "Siamese Case II Test")
 OUTPUT_DIR = "test_results/Final_Integrated_Run"
 
-
 FRUIT_CAL_FILE = "TestModules\Fruit_cal.txt"
 FOOD_CAL_FILE = "TestModules\Food_cal.txt"
 
